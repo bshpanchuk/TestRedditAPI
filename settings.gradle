@@ -1,0 +1,2 @@
+rootProject.name = "Test Yalantis"
+include ':app'

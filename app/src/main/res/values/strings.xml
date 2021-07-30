@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">Test Yalantis</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="share">Share</string>
+    <string name="label_error">Something went wrong, please try again</string>
+    <string name="button_retry">Retry</string>
+
+     <!--content description-->
+    <string name="image_post">Image post</string>
+    <string name="button_rating_plus">Rating plus</string>
+    <string name="button_rating_minus">Rating minus</string>
+    <string name="button_comments">Open comments</string>
+    <string name="button_share">Share post</string>
 </resources>

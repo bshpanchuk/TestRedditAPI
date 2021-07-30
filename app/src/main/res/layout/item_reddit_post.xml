@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="?android:colorBackground"
+    android:foreground="?android:selectableItemBackground">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="12dp">
+
+        <TextView
+            android:id="@+id/text_author"
+            style="@style/commonText"
+            app:layout_constraintEnd_toStartOf="@+id/text_time_ago"
+            app:layout_constraintStart_toEndOf="@+id/text_subreddit"
+            app:layout_constraintTop_toTopOf="@+id/text_subreddit"
+            tools:text="@tools:sample/lorem/random" />
+
+        <TextView
+            android:id="@+id/text_subreddit"
+            style="@style/subredditText"
+            android:maxLength="24"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@tools:sample/lorem/random" />
+
+        <TextView
+            android:id="@+id/text_time_ago"
+            style="@style/commonText"
+            android:layout_width="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/text_subreddit"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintTop_toTopOf="@+id/text_subreddit"
+            tools:text="4 hours ago" />
+
+        <TextView
+            android:id="@+id/text_title"
+            style="@style/titleText"
+            tools:maxLength="300"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/text_subreddit"
+            tools:text="@tools:sample/lorem/random" />
+
+        <ImageView
+            android:id="@+id/image_post"
+            style="@style/postImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_title"
+            tools:src="@tools:sample/avatars"
+            tools:visibility="visible"
+            android:contentDescription="@string/image_post" />
+
+        <ImageButton
+            android:id="@+id/button_rating_plus"
+            style="@style/imageButton"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:src="@drawable/ic_round_arrow_up"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/text_text_rating"
+            app:layout_constraintHorizontal_bias="0.3"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_post"
+            android:contentDescription="@string/button_rating_plus" />
+
+        <TextView
+            android:id="@+id/text_text_rating"
+            style="@style/statsText"
+            app:layout_constraintBottom_toBottomOf="@+id/button_rating_plus"
+            app:layout_constraintEnd_toStartOf="@+id/button_rating_minus"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_rating_plus"
+            app:layout_constraintTop_toTopOf="@+id/button_rating_plus"
+            tools:text="26.0k" />
+
+        <ImageButton
+            android:id="@+id/button_rating_minus"
+            style="@style/imageButton"
+            android:src="@drawable/ic_round_arrow_down"
+            app:layout_constraintBottom_toBottomOf="@+id/button_rating_plus"
+            app:layout_constraintEnd_toEndOf="@id/button_comments"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/text_text_rating"
+            app:layout_constraintTop_toTopOf="@+id/button_rating_plus"
+            app:layout_constraintVertical_bias="1.0"
+            android:contentDescription="@string/button_rating_minus" />
+
+
+        <ImageButton
+            android:id="@+id/button_comments"
+            style="@style/imageButton"
+            android:src="@drawable/ic_outline_comment"
+            app:layout_constraintEnd_toStartOf="@+id/text_number_of_comments"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_rating_plus"
+            android:contentDescription="@string/button_comments" />
+
+        <TextView
+            android:id="@+id/text_number_of_comments"
+            style="@style/statsText"
+            app:layout_constraintBottom_toBottomOf="@+id/button_comments"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button_comments"
+            app:layout_constraintTop_toTopOf="@+id/button_comments"
+            tools:text="508" />
+
+        <ImageButton
+            android:id="@+id/button_share"
+            style="@style/imageButton"
+            android:src="@drawable/ic_round_share_24"
+            app:layout_constraintEnd_toStartOf="@+id/text_share"
+            app:layout_constraintHorizontal_bias="0.6"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/text_number_of_comments"
+            app:layout_constraintTop_toTopOf="@+id/button_comments"
+            android:contentDescription="@string/button_share" />
+
+        <TextView
+            android:id="@+id/text_share"
+            style="@style/statsText"
+            android:text="@string/share"
+            app:layout_constraintBottom_toBottomOf="@+id/button_share"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_share"
+            app:layout_constraintTop_toTopOf="@+id/button_share" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            style="@style/guideline"
+            app:layout_constraintGuide_begin="@dimen/margin" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            style="@style/guideline"
+            app:layout_constraintGuide_end="@dimen/margin" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

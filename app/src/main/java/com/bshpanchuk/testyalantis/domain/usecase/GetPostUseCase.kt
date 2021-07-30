@@ -1,4 +1,11 @@
 package com.bshpanchuk.testyalantis.domain.usecase
 
-class GetPostUseCase {
+import com.bshpanchuk.testyalantis.domain.repository.Repository
+
+class GetPostUseCase(
+    private val repository: Repository
+) {
+
+    operator fun invoke() = repository.getTopPost()
+
 }

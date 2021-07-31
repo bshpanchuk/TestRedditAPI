@@ -1,5 +1,5 @@
 
-# Test App Yalantis
+# Test App Reddit API
 
 Test App Android Junior to display [Reddit API](https://www.reddit.com/dev/api/) it has been built with clean architecture principles, Repository Pattern and MVVM
 pattern as well as Architecture Components.

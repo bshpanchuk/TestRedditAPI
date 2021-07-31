@@ -26,6 +26,5 @@ private fun providePostDao(redditDatabase: RedditDatabase) : RedditPostDao {
 private fun provideDatabase(application: Application) : RedditDatabase {
     return Room
         .databaseBuilder(application, RedditDatabase::class.java, "RedditDatabase")
-        .allowMainThreadQueries()
         .build()
 }

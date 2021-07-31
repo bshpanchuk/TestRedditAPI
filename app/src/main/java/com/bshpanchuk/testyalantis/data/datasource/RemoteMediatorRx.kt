@@ -2,6 +2,7 @@ package com.bshpanchuk.testyalantis.data.datasource
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
+import androidx.paging.LoadType.*
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxRemoteMediator
 import com.bshpanchuk.testyalantis.data.api.RedditApiService
@@ -31,45 +32,55 @@ class RemoteMediatorRx(
         loadType: LoadType,
         state: PagingState<Int, ItemRedditDb>
     ): Single<MediatorResult> {
-
-        val loadKey: String? =  when (loadType) {
-            LoadType.REFRESH -> null
-            LoadType.PREPEND -> return Single.just(MediatorResult.Success(true))
-            LoadType.APPEND -> {
-                val remoteKey = remoteKeyDao.remoteKeyByPost(subredditName)
-                if (remoteKey.nextPageKey == null) {
-                    return Single.just(MediatorResult.Success(true))
-                }
-                remoteKey.nextPageKey
-            }
-        }
-
-        val loadSize = when (loadType) {
-            LoadType.REFRESH -> state.config.initialLoadSize
-            else -> state.config.pageSize
-        }
-
-        return redditApi.getTopPost(
-            subreddit = subredditName,
-            limit = loadSize,
-            after = loadKey
-        )
+        return Single.just(loadType)
             .subscribeOn(Schedulers.io())
-            .map { mapper.map(it) }
             .map {
-                insertToDB(loadType, it)
-                it.itemsPost
-            }
-            .observeOn(AndroidSchedulers.mainThread())
-            .map<MediatorResult> { MediatorResult.Success(endOfPaginationReached = it.isEmpty()) }
-            .onErrorReturn { MediatorResult.Error(it) }
+                when (it) {
+                    REFRESH -> "null"
+                    PREPEND -> "return"
+                    APPEND -> {
+                        val remoteKey = remoteKeyDao.remoteKeyByPost(subredditName)
+                        remoteKey.nextPageKey ?: "return"
+                    }
+                }
+            }.flatMap { page ->
+                when(page){
+                    "return" -> {
+                        Single.just(MediatorResult.Success(endOfPaginationReached = true))
+                    }
+                    else -> {
+                        val loadSize = when (loadType) {
+                            REFRESH -> state.config.initialLoadSize
+                            else -> state.config.pageSize
+                        }
+
+                        val loadKey = if (page != "null") page else null
+
+                        redditApi.getTopPost(
+                            subreddit = subredditName,
+                            limit = loadSize,
+                            after = loadKey
+                        )
+                            .subscribeOn(Schedulers.io())
+                            .map { mapper.map(it) }
+                            .map {
+                                insertToDB(loadType, it)
+                                it.itemsPost
+                            }
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .map<MediatorResult> { MediatorResult.Success(endOfPaginationReached = it.isEmpty()) }
+                            .onErrorReturn { MediatorResult.Error(it) }
+                    }
+                }
+
+            }.onErrorReturn { MediatorResult.Success(endOfPaginationReached = true) }
     }
 
     private fun insertToDB(
         loadType: LoadType,
         data: DataReddit
     ) {
-        if (loadType == LoadType.REFRESH) {
+        if (loadType == REFRESH) {
             postDao.deleteBySubreddit(subredditName)
             remoteKeyDao.deleteBySubreddit(subredditName)
         }

@@ -24,23 +24,7 @@ Build System : [Gradle](https://gradle.org/)
 -	MVP/MVVM architecture + Repository pattern
 -	Retrofit 2 + RxJava / RxJava2
 -	Some kind of error handling
--	Database storage❌
-
-## Prerequisite
-
-Read this [guide](https://github.com/reddit-archive/reddit/wiki/OAuth2)
-
-You need to get a [key](https://www.reddit.com/prefs/apps)
-
-Put data in ```credensials.xml```
-
-```shell script
-<item>
-    <clientId>YOUR_CLIENT_ID</clientId>
-    <redirectUrl>YOUR_REDIRECT_API</redirectUrl>
-    <scope>YOUR_SCOPE</scope>
-</item>
-```
+-	Database storage
 
 ## Architecture
 
@@ -60,7 +44,6 @@ Libraries used in the whole application are:
   and act as a channel between use cases and ui
   - [View Binding](https://developer.android.com/topic/libraries/view-binding) -  feature that allows you to more easily write code that interacts with views
   - [Paging 3](https://developer.android.com/topic/libraries/architecture/paging/v3-overview) -  helps you load and display pages of data from a larger dataset from network
-- [Android-Reddit-OAuth2](https://github.com/KirkBushman/Android-Reddit-OAuth2) -  This is a OAuth2 authentication client for the Reddit API built for Android
 - [Retrofit](https://square.github.io/retrofit/) - type safe http client 
 and supports coroutines out of the box
 - [Gson](https://github.com/google/gson) - JSON Parser,used to parse 
@@ -80,8 +63,6 @@ and default parameters
 
 |<img src="art/screen1.jpg" width=200/>|<img src="art/screen2.jpg" width=200/>|
 |:----:|:----:|
-
-https://streamable.com/2uartv
 
 
 ## License

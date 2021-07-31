@@ -1,4 +1,4 @@
-package com.bshpanchuk.testyalantis.presentation.home
+package com.bshpanchuk.testyalantis.presentation.ui.home
 
 import android.graphics.Rect
 import android.view.View

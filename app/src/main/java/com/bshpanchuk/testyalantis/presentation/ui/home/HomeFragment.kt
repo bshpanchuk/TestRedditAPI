@@ -1,4 +1,4 @@
-package com.bshpanchuk.testyalantis.presentation.home
+package com.bshpanchuk.testyalantis.presentation.ui.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,16 +7,21 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bshpanchuk.testyalantis.R
+import com.bshpanchuk.testyalantis.common.di.BASE_URL
 import com.bshpanchuk.testyalantis.databinding.FragmentHomeBinding
-import com.bshpanchuk.testyalantis.domain.model.DataPost
-import com.bshpanchuk.testyalantis.presentation.home.HomeFragment.ViewState.*
-import com.bshpanchuk.testyalantis.presentation.home.adapter.LoaderStateAdapter
-import com.bshpanchuk.testyalantis.presentation.home.adapter.RedditPostAdapter
+import com.bshpanchuk.testyalantis.presentation.model.RedditPostUI
+import com.bshpanchuk.testyalantis.presentation.ui.home.HomeFragment.ViewState.*
+import com.bshpanchuk.testyalantis.presentation.ui.home.adapter.LoaderStateAdapter
+import com.bshpanchuk.testyalantis.presentation.ui.home.adapter.RedditPostAdapter
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.filter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @ExperimentalCoroutinesApi
@@ -46,27 +51,25 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun initView() {
         with(binding) {
-            val loaderStateAdapter = LoaderStateAdapter {
+            val header = LoaderStateAdapter {
                 postAdapter.retry()
             }
 
-            recyclerPost.adapter =
-                postAdapter.withLoadStateFooter(loaderStateAdapter)
+            val footer = LoaderStateAdapter {
+                postAdapter.retry()
+            }
 
-            recyclerPost.setHasFixedSize(true)
-            recyclerPost.addItemDecoration(VerticalSpaceItemDecorator(32))
+            recyclerPost.apply {
+                adapter = postAdapter.withLoadStateHeaderAndFooter(header, footer)
+                setHasFixedSize(true)
+                addItemDecoration(VerticalSpaceItemDecorator(32))
+            }
 
             postAdapter.addLoadStateListener { loadState ->
-                when(loadState.refresh){
-                    is LoadState.NotLoading -> {
-                        setState(NOT_LOADING)
-                    }
-                    LoadState.Loading -> {
-                        setState(LOADING)
-                    }
-                    is LoadState.Error -> {
-                        setState(ERROR)
-                    }
+                when (loadState.refresh) {
+                    is LoadState.NotLoading -> setState(NOT_LOADING)
+                    LoadState.Loading -> setState(LOADING)
+                    is LoadState.Error -> setState(ERROR)
                 }
             }
 
@@ -82,39 +85,42 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 postAdapter.submitData(lifecycle, it)
             },
                 {
+                    it.printStackTrace()
                     setState(ERROR)
                 })
         )
     }
 
-    private fun setState(state: ViewState){
-        when(state){
-            ERROR -> {
-                binding.includeContainer.isVisible = true
-                binding.progressLoad.isVisible = false
-            }
-            LOADING -> {
-              binding.progressLoad.isVisible = true
-            }
-            NOT_LOADING -> {
-                binding.includeContainer.isVisible = false
-                binding.progressLoad.isVisible = false
+    private fun setState(state: ViewState) {
+        with(binding) {
+            when (state) {
+                ERROR -> {
+                    includeContainer.isVisible = true
+                    progressLoad.isVisible = false
+                }
+                LOADING -> {
+                    progressLoad.isVisible = true
+                }
+                NOT_LOADING -> {
+                    includeContainer.isVisible = false
+                    progressLoad.isVisible = false
+                }
             }
         }
     }
 
-    private fun openChromeTab(item: DataPost.PostItem) {
-        val uri = "$REDDIT_URL${item.link}".toUri()
+    private fun openChromeTab(item: RedditPostUI) {
+        val uri = "$BASE_URL${item.link}".toUri()
         val builder = CustomTabsIntent.Builder()
         val intent = builder.build()
 
         intent.launchUrl(requireContext(), uri)
     }
 
-    private fun sharePost(item: DataPost.PostItem) {
+    private fun sharePost(item: RedditPostUI) {
         val sendIntent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, "$REDDIT_URL${item.link}")
+            putExtra(Intent.EXTRA_TEXT, "$BASE_URL${item.link}")
             type = "text/plain"
         }
 
@@ -127,14 +133,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onDestroyView()
     }
 
-    companion object {
-        private const val REDDIT_URL = "https://www.reddit.com/"
-    }
-
-    private enum class ViewState{
+    private enum class ViewState {
         ERROR,
         LOADING,
         NOT_LOADING
     }
 }
-

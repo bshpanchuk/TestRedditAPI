@@ -1,4 +1,4 @@
-package com.bshpanchuk.testyalantis.presentation.home.adapter
+package com.bshpanchuk.testyalantis.presentation.ui.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,16 +8,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bshpanchuk.testyalantis.common.extension.load
 import com.bshpanchuk.testyalantis.databinding.ItemRedditPostBinding
-import com.bshpanchuk.testyalantis.domain.model.DataPost
+import com.bshpanchuk.testyalantis.presentation.model.RedditPostUI
 
 class RedditPostAdapter(
-    private val clickOpen: (DataPost.PostItem) -> Unit,
-    private val clickShare: (DataPost.PostItem) -> Unit
-) :
-    PagingDataAdapter<DataPost.PostItem, RedditPostAdapter.PostViewHolder>(PostDiffUtil()) {
+    private val clickOpen: (RedditPostUI) -> Unit,
+    private val clickShare: (RedditPostUI) -> Unit
+) : PagingDataAdapter<RedditPostUI, RedditPostAdapter.PostViewHolder>(PostDiffUtil()) {
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        holder.bind(getItem(position)!!)
+        holder.bind(getItem(position))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -32,7 +31,9 @@ class RedditPostAdapter(
     inner class PostViewHolder(private val binding: ItemRedditPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: DataPost.PostItem) {
+        fun bind(item: RedditPostUI?) {
+            if (item == null) return
+
             with(binding) {
                 textAuthor.text = item.author
                 textSubreddit.text = item.subreddit
@@ -60,20 +61,18 @@ class RedditPostAdapter(
         }
     }
 
-    private class PostDiffUtil : DiffUtil.ItemCallback<DataPost.PostItem>() {
+    private class PostDiffUtil : DiffUtil.ItemCallback<RedditPostUI>() {
         override fun areItemsTheSame(
-            oldItem: DataPost.PostItem,
-            newItem: DataPost.PostItem
-        ): Boolean {
-            return oldItem.title == newItem.title
-        }
-
-        override fun areContentsTheSame(
-            oldItem: DataPost.PostItem,
-            newItem: DataPost.PostItem
+            oldItem: RedditPostUI, newItem: RedditPostUI
         ): Boolean {
             return oldItem == newItem
         }
 
+        override fun areContentsTheSame(
+            oldItem: RedditPostUI, newItem: RedditPostUI
+        ): Boolean {
+            return oldItem.name == newItem.name
+        }
     }
+
 }

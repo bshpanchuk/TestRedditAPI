@@ -38,4 +38,4 @@ private fun provideOkHttpClient(httpLogInt: HttpLoggingInterceptor): OkHttpClien
 
 private fun provideApi(retrofit: Retrofit): RedditApiService = retrofit.create(RedditApiService::class.java)
 
-const val BASE_URL = "https://oauth.reddit.com/"
+const val BASE_URL = "https://www.reddit.com/"

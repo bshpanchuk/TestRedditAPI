@@ -1,4 +1,4 @@
-package com.bshpanchuk.testyalantis.presentation.home.adapter
+package com.bshpanchuk.testyalantis.presentation.ui.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

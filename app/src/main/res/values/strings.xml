@@ -5,6 +5,27 @@
     <string name="label_error">Something went wrong, please try again</string>
     <string name="button_retry">Retry</string>
 
+    <plurals name="minutes_ago">
+        <item quantity="one">%d minute ago</item>
+        <item quantity="other">%d minutes ago</item>
+    </plurals>
+    <plurals name="hours_ago">
+        <item quantity="one">%d hour ago</item>
+        <item quantity="other">%d hours ago</item>
+    </plurals>
+    <plurals name="days_ago">
+        <item quantity="one">%d day ago</item>
+        <item quantity="other">%d days ago</item>
+    </plurals>
+    <plurals name="mounts_ago">
+        <item quantity="one">%d mount ago</item>
+        <item quantity="other">%d mounts ago</item>
+    </plurals>
+    <plurals name="years_ago">
+        <item quantity="one">%d year ago</item>
+        <item quantity="other">%d years ago</item>
+    </plurals>
+
      <!--content description-->
     <string name="image_post">Image post</string>
     <string name="button_rating_plus">Rating plus</string>

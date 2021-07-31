@@ -9,9 +9,5 @@ data class Data(
     @SerializedName("before")
     val before: String?,
     @SerializedName("children")
-    val children: List<Children>,
-    @SerializedName("dist")
-    val dist: Int,
-    @SerializedName("geo_filter")
-    val geoFilter: String
+    val children: List<Children>
 )

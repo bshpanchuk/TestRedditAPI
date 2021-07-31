@@ -19,7 +19,7 @@ class App : Application() {
                     applicationModule,
                     networkModule,
                     viewModelModule,
-                    redditModule
+                    databaseModule
                 )
             )
         }

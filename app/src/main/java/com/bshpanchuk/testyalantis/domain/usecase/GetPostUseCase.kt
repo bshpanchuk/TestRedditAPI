@@ -6,6 +6,6 @@ class GetPostUseCase(
     private val repository: Repository
 ) {
 
-    operator fun invoke() = repository.getTopPost()
+    operator fun invoke(subreddit: String) = repository.getTopPost(subreddit)
 
 }

@@ -28,13 +28,8 @@ Build System : [Gradle](https://gradle.org/)
 
 ## Architecture
 
+The purpose of this repo is to follow up Clean Architecture principles by bringing them to Android.
 
-The Application is split into a three layer architecture:
-- Presentation
-- Domain
-- Data
-
- 
 ## Libraries
 
 Libraries used in the whole application are:
@@ -43,6 +38,7 @@ Libraries used in the whole application are:
   - [Viewmodel](https://developer.android.com/topic/libraries/architecture/viewmodel) - Manage UI related data in a lifecycle conscious way 
   and act as a channel between use cases and ui
   - [View Binding](https://developer.android.com/topic/libraries/view-binding) -  feature that allows you to more easily write code that interacts with views
+  - [Room](https://developer.android.com/jetpack/androidx/releases/room) -  provides an abstraction layer over SQLite to allow for more robust database access while harnessing the full power of SQLite
   - [Paging 3](https://developer.android.com/topic/libraries/architecture/paging/v3-overview) -  helps you load and display pages of data from a larger dataset from network
 - [Retrofit](https://square.github.io/retrofit/) - type safe http client 
 and supports coroutines out of the box
@@ -51,7 +47,6 @@ requests on the data layer for Entities and understands Kotlin non-nullable
 and default parameters
 - [okhttp-logging-interceptor](https://github.com/square/okhttp/blob/master/okhttp-logging-interceptor/README.md) - logs HTTP request and response data
 - [kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines) - Library Support for coroutines
-- [Leak Canary](https://square.github.io/leakcanary/) - Leak Detection Library
 - [Material Design](https://material.io/develop/android/docs/getting-started/) - build awesome beautiful UIs
 - [Koin](https://github.com/InsertKoinIO/koin) - A pragmatic lightweight dependency injection framework for Kotlin
 - [ViewBindingPropertyDelegate](https://github.com/kirich1409/ViewBindingPropertyDelegate) - Make work with Android View Binding simpler

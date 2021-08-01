@@ -17,9 +17,9 @@
         <item quantity="one">%d day ago</item>
         <item quantity="other">%d days ago</item>
     </plurals>
-    <plurals name="mounts_ago">
-        <item quantity="one">%d mount ago</item>
-        <item quantity="other">%d mounts ago</item>
+    <plurals name="months_ago">
+        <item quantity="one">%d month ago</item>
+        <item quantity="other">%d months ago</item>
     </plurals>
     <plurals name="years_ago">
         <item quantity="one">%d year ago</item>

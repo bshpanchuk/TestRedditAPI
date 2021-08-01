@@ -1,7 +1,6 @@
 package com.bshpanchuk.testyalantis.presentation.ui.home
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.paging.map
 import androidx.paging.rxjava2.cachedIn
 import com.bshpanchuk.testyalantis.domain.model.ItemRedditPost
@@ -16,10 +15,8 @@ class HomeViewModel(
     private val mapper: Mapper<ItemRedditPost, RedditPostUI>
 ) : ViewModel() {
 
-    private val subreddit = "formula1"
-
-    private val data = getPostUseCase
-        .invoke(subreddit)
+    private val pagingData = getPostUseCase
+        .invoke(DEFAULT_SUBREDDIT)
         .map { pagingData ->
             pagingData.map {
                 mapper.map(it)
@@ -27,7 +24,11 @@ class HomeViewModel(
         }
         .cachedIn(viewModelScope)
 
+    fun getData() = pagingData
 
-    fun getData() = data
+
+    companion object {
+        const val DEFAULT_SUBREDDIT = "formula1"
+    }
 
 }

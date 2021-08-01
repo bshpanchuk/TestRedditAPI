@@ -21,7 +21,6 @@ class RepositoryImpl(
     private val mapperToDomain: Mapper<ItemRedditDb, ItemRedditPost>,
 ) : Repository {
 
-
     @ExperimentalCoroutinesApi
     @ExperimentalPagingApi
     override fun getTopPost(subreddit: String): Flowable<PagingData<ItemRedditPost>> {

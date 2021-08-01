@@ -28,11 +28,10 @@ val applicationModule = module {
     factory<BaseResourceManager> { ResourceManager(androidApplication()) }
 
     single<Repository> { RepositoryImpl(get(), get(), get(named(DATA)), get(named(DOMAIN))) }
-
 }
 
-private const val UI = "ui"
-private const val DOMAIN = "domain"
-private const val DATA = "data"
+const val UI = "ui"
+const val DOMAIN = "domain"
+const val DATA = "data"
 
 

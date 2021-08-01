@@ -8,6 +8,7 @@ import com.bshpanchuk.testyalantis.presentation.model.RedditPostUI
 import java.util.*
 
 class PresentationMapper(private val resourceManager: BaseResourceManager) : Mapper<ItemRedditPost, RedditPostUI> {
+
     override fun map(oldData: ItemRedditPost): RedditPostUI {
         return with(oldData) {
             RedditPostUI(

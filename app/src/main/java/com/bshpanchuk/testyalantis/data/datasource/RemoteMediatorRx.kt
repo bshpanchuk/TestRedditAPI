@@ -53,7 +53,6 @@ class RemoteMediatorRx(
                             REFRESH -> state.config.initialLoadSize
                             else -> state.config.pageSize
                         }
-
                         val loadKey = if (page != "null") page else null
 
                         redditApi.getTopPost(
@@ -72,7 +71,6 @@ class RemoteMediatorRx(
                             .onErrorReturn { MediatorResult.Error(it) }
                     }
                 }
-
             }.onErrorReturn { MediatorResult.Success(endOfPaginationReached = true) }
     }
 

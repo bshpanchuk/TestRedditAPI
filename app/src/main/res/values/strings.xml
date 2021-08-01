@@ -32,6 +32,4 @@
     <string name="button_rating_minus">Rating minus</string>
     <string name="button_comments">Open comments</string>
     <string name="button_share">Share post</string>
-    <string name="search_hint">subreddit</string>
-    <string name="default_subreddit">movies</string>
 </resources>

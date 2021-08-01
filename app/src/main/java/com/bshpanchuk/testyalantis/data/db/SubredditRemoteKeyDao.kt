@@ -9,11 +9,11 @@ import com.bshpanchuk.testyalantis.data.db.model.SubredditRemoteKey
 @Dao
 interface SubredditRemoteKeyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-     fun insert(keys: SubredditRemoteKey)
+    suspend  fun insert(keys: SubredditRemoteKey)
 
     @Query("SELECT * FROM remote_keys WHERE subreddit = :subreddit")
-     fun remoteKeyByPost(subreddit: String): SubredditRemoteKey
+    suspend  fun remoteKeyByPost(subreddit: String): SubredditRemoteKey
 
     @Query("DELETE FROM remote_keys WHERE subreddit = :subreddit")
-     fun deleteBySubreddit(subreddit: String)
+    suspend  fun deleteBySubreddit(subreddit: String)
 }

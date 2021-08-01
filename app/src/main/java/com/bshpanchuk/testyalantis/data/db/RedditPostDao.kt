@@ -10,14 +10,12 @@ import com.bshpanchuk.testyalantis.data.db.model.ItemRedditDb
 @Dao
 interface RedditPostDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-     fun insertAll(posts: List<ItemRedditDb>)
+    fun insertAll(posts: List<ItemRedditDb>)
 
     @Query("SELECT * FROM items WHERE subreddit = :subreddit ORDER BY indexInResponse ASC")
     fun postsBySubreddit(subreddit: String): PagingSource<Int, ItemRedditDb>
 
     @Query("DELETE FROM items WHERE subreddit = :subreddit")
-     fun deleteBySubreddit(subreddit: String)
+    fun deleteBySubreddit(subreddit: String)
 
-    @Query("SELECT MAX(indexInResponse) + 1 FROM items WHERE subreddit = :subreddit")
-     fun getNextIndexInSubreddit(subreddit: String): Int
 }

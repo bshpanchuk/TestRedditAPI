@@ -8,9 +8,9 @@ Build System : [Gradle](https://gradle.org/)
 
 ## Table of Contents
 
-- [Prerequisite](#prerequisite)
 - [Task requirements](#task-requirements)
 - [Architecture](#architecture)
+- [Branches](#branches)
 - [Libraries](#libraries)
 - [Demo](#demo)
 
@@ -29,6 +29,12 @@ Build System : [Gradle](https://gradle.org/)
 ## Architecture
 
 The purpose of this repo is to follow up Clean Architecture principles by bringing them to Android.
+
+## Branches
+
+- [master](https://github.com/bshpanchuk/TestRedditAPI) - Pagging + Rx Flowable
+- [toFlow](https://github.com/bshpanchuk/TestRedditAPI/tree/toFlow) - Pagging + Kotlin Flow
+
 
 ## Libraries
 

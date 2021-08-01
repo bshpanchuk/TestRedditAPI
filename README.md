@@ -8,7 +8,6 @@ Build System : [Gradle](https://gradle.org/)
 
 ## Table of Contents
 
-- [Prerequisite](#prerequisite)
 - [Task requirements](#task-requirements)
 - [Architecture](#architecture)
 - [Libraries](#libraries)

@@ -6,6 +6,7 @@ import com.bshpanchuk.testyalantis.domain.model.ItemRedditPost
 import com.bshpanchuk.testyalantis.domain.model.mapper.Mapper
 import com.bshpanchuk.testyalantis.presentation.model.RedditPostUI
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class PresentationMapper(private val resourceManager: BaseResourceManager) : Mapper<ItemRedditPost, RedditPostUI> {
 
@@ -16,7 +17,7 @@ class PresentationMapper(private val resourceManager: BaseResourceManager) : Map
                 title = title,
                 author = "•$author",
                 subreddit = "r/$subreddit",
-                data = calcData(data),
+                data = formatData(data),
                 imageUrl = imageUrl,
                 rating = formatNumbers(rating),
                 numberOfComments = formatNumbers(numberOfComments),
@@ -30,35 +31,22 @@ class PresentationMapper(private val resourceManager: BaseResourceManager) : Map
         return String.format(Locale.ENGLISH ,"%.1f" , quantity / 1000.0) + "k"
     }
 
-    private fun calcData(createdTime: Long): String {
-        val timeMillisPost = createdTime * 1000
-        val timeMillisNow = System.currentTimeMillis()
+    private fun formatData(timeCreated: Long): String {
+        val timeDiff = System.currentTimeMillis() - (timeCreated * 1000)
 
-        val timePost = GregorianCalendar().apply {
-            timeInMillis = timeMillisPost
-        }
+        val years = (timeDiff / (1000L * 60 * 60 * 24 * 365) % 365)
+        if (years > 0) return resourceManager.getQuantityString(R.plurals.years_ago, years.toInt())
 
-        val timeNow = GregorianCalendar().apply {
-            timeInMillis = timeMillisNow
-        }
+        val month = (timeDiff / (1000L * 60 * 60 * 24 * 30) % 30)
+        if (month > 0) return resourceManager.getQuantityString(R.plurals.months_ago, month.toInt())
 
-        (timeNow.get(Calendar.YEAR) - timePost.get(Calendar.YEAR)).let { years ->
-            if (years > 0) return resourceManager.getQuantityString(R.plurals.years_ago, years)
-        }
+        val days = TimeUnit.DAYS.convert(timeDiff, TimeUnit.MILLISECONDS)
+        if (days > 0) return resourceManager.getQuantityString(R.plurals.days_ago, days.toInt())
 
-        (timeNow.get(Calendar.MONTH) - timePost.get(Calendar.MONTH)).let { mounts ->
-            if (mounts > 0) return resourceManager.getQuantityString(R.plurals.mounts_ago, mounts)
-        }
+        val hours = TimeUnit.HOURS.convert(timeDiff, TimeUnit.MILLISECONDS)
+        if (hours > 0) return resourceManager.getQuantityString(R.plurals.hours_ago, hours.toInt())
 
-        (timeNow.get(Calendar.DAY_OF_YEAR) - timePost.get(Calendar.DAY_OF_YEAR)).let { days ->
-            if (days > 0) return resourceManager.getQuantityString(R.plurals.days_ago, days)
-        }
-
-        (timeNow.get(Calendar.HOUR_OF_DAY) - timePost.get(Calendar.HOUR_OF_DAY)).let { hours ->
-            if (hours > 0) return resourceManager.getQuantityString(R.plurals.hours_ago, hours)
-        }
-
-        val minutes = timeNow.get(Calendar.MINUTE) - timePost.get(Calendar.MINUTE)
-        return resourceManager.getQuantityString(R.plurals.minutes_ago, minutes)
+        val minutes = TimeUnit.MINUTES.convert(timeDiff, TimeUnit.MILLISECONDS)
+        return resourceManager.getQuantityString(R.plurals.minutes_ago, minutes.toInt())
     }
 }

@@ -8,7 +8,8 @@ import com.bshpanchuk.testyalantis.presentation.model.RedditPostUI
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class PresentationMapper(private val resourceManager: BaseResourceManager) : Mapper<ItemRedditPost, RedditPostUI> {
+class PresentationMapper(private val resourceManager: BaseResourceManager) :
+    Mapper<ItemRedditPost, RedditPostUI> {
 
     override fun map(oldData: ItemRedditPost): RedditPostUI {
         return with(oldData) {
@@ -26,9 +27,13 @@ class PresentationMapper(private val resourceManager: BaseResourceManager) : Map
         }
     }
 
-    private fun formatNumbers(quantity: Int) : String{
-        if (quantity < 1000) return quantity.toString()
-        return String.format(Locale.ENGLISH ,"%.1f" , quantity / 1000.0) + "k"
+    private fun formatNumbers(quantity: Int): String {
+        return when {
+            quantity < 0 -> "0"
+            quantity > 1000 -> String
+                .format(Locale.ENGLISH, "%.1f", quantity / 1000.0) + "k"
+            else -> quantity.toString()
+        }
     }
 
     private fun formatData(timeCreated: Long): String {

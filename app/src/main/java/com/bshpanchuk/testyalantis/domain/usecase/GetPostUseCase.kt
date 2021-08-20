@@ -5,7 +5,5 @@ import com.bshpanchuk.testyalantis.domain.repository.Repository
 class GetPostUseCase(
     private val repository: Repository
 ) {
-
     operator fun invoke(subreddit: String) = repository.getTopPost(subreddit)
-
 }
